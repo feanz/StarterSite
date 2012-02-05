@@ -1,0 +1,44 @@
+﻿@model IEnumerable<StarterSite.Web.Models.UserModel>
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    Users</h2>
+@{
+    var grid = new WebGrid(Model);
+    grid.Pager(WebGridPagerModes.NextPrevious);    
+}
+<br />
+<div>
+    @using (Html.BeginForm())
+    {
+        @grid.GetHtml(
+            tableStyle: "usertable",
+            columns: grid.Columns(
+                grid.Column(format: (item) =>
+                                    Html.ActionLink("Edit", "Edit", new { controller = "Account", item.Email })),
+                grid.Column("Email"),
+                grid.Column("CreationDate", "Created On", (item) => @String.Format("{0:g}", item.CreationDate)),
+                grid.Column("LastLoginDate", "Last Logon", (item) => @String.Format("{0:g}", item.LastLoginDate)),
+                grid.Column("IsApproved", "Is Approved"),
+                grid.Column(format: (item) =>
+                                    Html.ActionLink("Lock", "Lock", new { controller = "Account", item.Email })),
+                grid.Column(format: (item) =>
+                                    Html.ActionLink("Delete", "Delete", new { controller = "Account", item.Email }))
+                )
+                   )
+    }
+</div>
+@section Scripts
+{
+    <script type='text/javascript'>
+        $(document).ready(function () {
+            jQuery.each($('tr>td:nth-child(5)'), function () {
+                if ($(this).html() != "True") {
+                        $(this).parent().addClass("warning-row");
+                    }
+            });
+        });
+    </script>
+}

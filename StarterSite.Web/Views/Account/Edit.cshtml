@@ -1,0 +1,44 @@
+﻿@using StarterSite.Web.Models
+@model StarterSite.Web.Models.UserModel
+@{
+    ViewBag.Title = "Edit User";
+}
+<h2>
+    Edit User</h2>
+<br/>
+<fieldset>
+    
+    @using (Html.BeginForm())
+    {  
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()        
+        
+        @Html.LabelFor(model => model.Email)
+        @Html.TextBoxFor(model => model.Email)
+        @Html.ValidationMessageFor(model => model.Email)
+        @Html.LabelFor(model => model.FirstName)
+        @Html.EditorFor(model => model.FirstName)
+        @Html.ValidationMessageFor(model => model.FirstName)
+        @Html.LabelFor(model => model.LastName)
+        @Html.EditorFor(model => model.LastName)
+        @Html.ValidationMessageFor(model => model.LastName)
+        @Html.LabelFor(model => model.Roles)
+        
+        
+        foreach (var role in (List<AssignedRole>)ViewBag.PossibleRoles)
+        { 
+            <input type="checkbox" name="selectedRoles" value="@role.RoleName" @(Html.Raw(role.Assigned ? "checked=\"checked\"" : ""))
+            /> @role.RoleName 
+            <br/>
+        }
+        @Html.ValidationMessageFor(model => model.Roles)
+       
+
+        <p>
+            <input type="submit" value="Update" style="width: 75px" />
+        </p>
+    }
+</fieldset>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

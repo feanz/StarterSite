@@ -1,0 +1,1 @@
+A MVC starter site with better membership out the box 

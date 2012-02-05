@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "User Roles";
+}
+<h2>
+    User Roles</h2>
+    <br/>
+<table>
+    <thead>
+        <tr>
+            <th>
+                Role Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in (string[])ViewBag.Roles)
+        {
+            <tr>
+                <td>
+                    @s
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "DeleteRole", "Account", new { s })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br/>
+<br/>
+<fieldset>
+    @using (Html.BeginForm("CreateRole","Account"))
+    {
+        <div>
+            @Html.Label("Role")
+        </div>
+        <div>
+            @Html.TextBox("Role")
+        </div>
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    }
+</fieldset>
